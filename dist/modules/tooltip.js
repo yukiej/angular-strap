@@ -1,6 +1,6 @@
 /**
  * angular-strap
- * @version v2.3.12 - 2017-01-26
+ * @version v2.3.12 - 2020-04-08
  * @link http://mgcrea.github.io/angular-strap
  * @author Olivier Louvignes <olivier@mg-crea.com> (https://github.com/mgcrea)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -258,7 +258,9 @@ angular.module('mgcrea.ngStrap.tooltip', [ 'mgcrea.ngStrap.core', 'mgcrea.ngStra
         }
       };
       $tooltip.focus = function() {
-        tipElement[0].focus();
+        if (tipElement) {
+          tipElement[0].focus();
+        }
       };
       $tooltip.setEnabled = function(isEnabled) {
         options.bsEnabled = isEnabled;
@@ -352,7 +354,7 @@ angular.module('mgcrea.ngStrap.tooltip', [ 'mgcrea.ngStrap.core', 'mgcrea.ngStra
         }
       }
       function bindKeyboardEvents() {
-        if (options.trigger !== 'focus') {
+        if (options.trigger !== 'focus' && tipElement) {
           tipElement.on('keyup', $tooltip.$onKeyUp);
         } else {
           element.on('keyup', $tooltip.$onFocusKeyUp);
@@ -368,7 +370,9 @@ angular.module('mgcrea.ngStrap.tooltip', [ 'mgcrea.ngStrap.core', 'mgcrea.ngStra
       var _autoCloseEventsBinded = false;
       function bindAutoCloseEvents() {
         $timeout(function() {
-          tipElement.on('click', stopEventPropagation);
+          if (tipElement !== null) {
+            tipElement.on('click', stopEventPropagation);
+          }
           $body.on('click', $tooltip.hide);
           _autoCloseEventsBinded = true;
         }, 0, false);

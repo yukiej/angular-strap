@@ -347,7 +347,9 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         };
 
         $tooltip.focus = function () {
-          tipElement[0].focus();
+          if (tipElement) {
+            tipElement[0].focus();
+          }
         };
 
         $tooltip.setEnabled = function (isEnabled) {
@@ -468,7 +470,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }
 
         function bindKeyboardEvents () {
-          if (options.trigger !== 'focus') {
+          if (options.trigger !== 'focus' && tipElement) {
             tipElement.on('keyup', $tooltip.$onKeyUp);
           } else {
             element.on('keyup', $tooltip.$onFocusKeyUp);
